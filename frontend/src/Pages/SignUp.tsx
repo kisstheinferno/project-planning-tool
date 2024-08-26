@@ -1,6 +1,7 @@
-import { Box, Input, Text, Button, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
+import { Box, Input, Text, Button, FormControl, FormLabel, FormErrorMessage, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const isInvalidEmail = (email: string) => {
   const emailFormat = /\S+@\S+\.\S+/;
@@ -20,6 +21,9 @@ const isInvalidPassMatch = (password: string, secondPassword: string) => {
 }
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const toast = useToast();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -86,7 +90,9 @@ const SignUp = () => {
         password,
       })
       .then((response) => {
-        console.log('RESPONSE: ', response);
+        console.log('RESPONSE: ', response.data);
+        const token = response.data;
+        localStorage.setItem("token", token);
         setName('');
         setEmail(''); 
         setUsername('');
@@ -97,6 +103,15 @@ const SignUp = () => {
         setSubmitClickedUsername(false);
         setSubmitClickedPassword(false);
         setSubmitClickedSecondPassword(false);
+
+        navigate("/projects");
+        toast({
+          title:"Account Created",
+          description:"We've created your account for you.",
+          status: "success",
+          duration:3000,
+          isClosable: true,
+        })
       })
     };
   }
