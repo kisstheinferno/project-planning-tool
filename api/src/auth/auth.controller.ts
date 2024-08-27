@@ -44,7 +44,7 @@ export class AuthController {
 
     @Post('log-in')
     logIn(@Body() logInDto: LogInDto) {
-        return this.authService.logIn(LogInDto);
+        return this.authService.logIn(logInDto);
     }
 
     @UseGuards(AuthGuard)
