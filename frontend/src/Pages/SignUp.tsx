@@ -113,6 +113,26 @@ const SignUp = () => {
           isClosable: true,
         })
       })
+      .catch ((error) => {
+        setName('');
+        setEmail(''); 
+        setUsername('');
+        setPassword('');
+        setSecondPassword('');
+        setSubmitClickedName(false);
+        setSubmitClickedEmail(false);
+        setSubmitClickedUsername(false);
+        setSubmitClickedPassword(false);
+        setSubmitClickedSecondPassword(false);
+        console.log("ERROR", error)
+        toast({
+          title:"Error",
+          description: "Account already exists",
+          status:"error",
+          duration: 3000,
+          isClosable: true,
+        })
+      })
     };
   }
 
