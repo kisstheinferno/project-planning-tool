@@ -41,4 +41,9 @@ export class AuthService {
       
       return await this.createAccessToken(user);
     } 
+
+    async logIn(logInDto) {
+      console.log("LoginDTO: ", logInDto)
+      return "fake token"
+    }
 }

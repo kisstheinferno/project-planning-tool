@@ -136,8 +136,6 @@ const SignUp = () => {
     };
   }
 
-
-
   return (
     <Box>
       <Text fontSize={20} textAlign='center' mb={4}>Create an Account</Text>
