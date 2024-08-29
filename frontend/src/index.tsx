@@ -7,6 +7,9 @@ import Login from "./Pages/Login";
 import Projects from "./Pages/Projects";
 import Profile from "./Pages/Profile";
 import axios from 'axios';
+import { createStandaloneToast } from '@chakra-ui/react';
+
+const { ToastContainer, toast } = createStandaloneToast()
 
 const router = createBrowserRouter([
   {
@@ -40,11 +43,23 @@ const router = createBrowserRouter([
               return response.data;
             } catch (error) {
               // if we have an expired token, we will show an error toast and redirect the user to the login page
-              console.log("Error: ", error);
+              toast({
+                title: 'An error occurred.',
+                description: 'You must be signed in to view this page!',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+              })
               return redirect("/log-in");
             }
           } else {
-            console.log("NO TOKEN");
+            toast({
+              title: 'An error occurred.',
+              description: 'You must have accout to view this page!',
+              status: 'error',
+              duration: 3000,
+              isClosable: true,
+            })
             return redirect("/sign-up");
           }
           // if we dont have a token, it will show error toast and we will redirect to the login page
@@ -56,4 +71,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-root.render(<RouterProvider router={router} />);
+root.render(
+  <>
+    <ToastContainer />
+    <RouterProvider router={router} />
+  </>
+);
