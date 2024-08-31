@@ -15,6 +15,21 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    loader: async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await axios.get("http://localhost:3005/auth/profile", 
+            { headers: { Authorization: `Bearer ${token}`} } 
+          );
+          return response.data;
+        } catch (error) {
+          return {};
+        }
+      } else {
+        return {};
+      }
+    },
     children: [
       {
         path: "/sign-up",

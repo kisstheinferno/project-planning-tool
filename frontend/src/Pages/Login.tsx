@@ -1,11 +1,13 @@
 import { Box, Text, FormControl, FormLabel, Input, FormErrorMessage, Button, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import { Context } from '../App';
 
 const Login = () => {
   const navigate = useNavigate();
   const toast = useToast();
+  const context = useOutletContext() as Context;
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -40,8 +42,8 @@ const Login = () => {
         password,
       })
       .then((response) => {
-        console.log('RESPONSE: ', response.data);
         const token = response.data;
+        context.toggleLoggedIn();
         localStorage.setItem("token", token);
         setUsername('');
         setPassword('');
